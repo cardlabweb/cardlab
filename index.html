@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CARDLAB.AM</title>
+<title>CARDLAB.AM – GitHub Pages Version</title>
 <style>
 *{box-sizing:border-box;font-family:Arial,sans-serif;margin:0;padding:0;}
 body{background:#f5f5f5;}
@@ -22,7 +22,7 @@ nav button{background:#fff;border:none;padding:10px 20px;cursor:pointer;border-r
 .modal-content{background:#fff;padding:10px;max-width:90vw;max-height:90vh;}
 .modal-content img,.modal-content video{max-width:100%;max-height:80vh;object-fit:contain;}
 #adminToggle{position:fixed;top:20px;right:20px;background:#111;color:#fff;padding:10px 15px;cursor:pointer;z-index:1500;}
-#adminPanel{position:fixed;top:60px;right:20px;background:#fff;border:2px solid #111;padding:20px;width:360px;max-height:80vh;overflow-y:auto;display:none;z-index:2000;border-radius:8px;}
+#adminPanel{position:fixed;top:60px;right:20px;background:#fff;border:2px solid #111;padding:20px;width:380px;max-height:80vh;overflow-y:auto;display:none;z-index:2000;border-radius:8px;}
 #adminPanel h3{margin-top:0;}
 #adminPanel input,#adminPanel textarea,#adminPanel select{width:100%;margin-bottom:10px;padding:8px;border-radius:4px;border:1px solid #ccc;}
 #adminPanel button{width:100%;padding:10px;font-weight:bold;margin-bottom:8px;}
@@ -53,6 +53,10 @@ footer a{color:#fff;font-weight:bold;}
 </select>
 <button onclick="addItem()">Ավելացնել</button>
 <button onclick="closeAdmin()">Փակել</button>
+<hr>
+<h4>Export / Import Data (GitHub Pages)</h4>
+<button onclick="exportData()">Export JSON</button>
+<input type="file" id="importFile" onchange="importData(event)" />
 </div>
 </div>
 <div id="modal" class="modal" onclick="closeModal()">
@@ -77,7 +81,7 @@ content.appendChild(div);});}
 function openModal(item){const modal=document.getElementById('modal');const mc=document.getElementById('modalContent');mc.innerHTML=item.media.startsWith('data:video')?`<video src="${item.media}" controls autoplay></video>`:`<img src="${item.media}" />`;modal.style.display='flex';}
 function closeModal(){document.getElementById('modal').style.display='none';}
 function openAdmin(){document.getElementById('adminPanel').style.display='block';isAdmin=false;render();}
-function closeAdmin(){document.getElementById('adminPanel').style.display='none';isAdmin=false;render();}
+function closeAdmin(){document.getElementById('adminPanel').style.display='none';isAdmin=false;document.getElementById('loginDiv').style.display='block';document.getElementById('panelContent').style.display='none';render();}
 function loginAdmin(){const pass=document.getElementById('adminPass').value;if(pass===PASSWORD){isAdmin=true;document.getElementById('loginDiv').style.display='none';document.getElementById('panelContent').style.display='block';render();}else{alert('Սխալ գաղտնաբառ');}}
 function addItem(){if(!isAdmin){alert('Մուտք պետք է գործել ադմինով');return;}
 const file=document.getElementById('media').files[0];
@@ -86,7 +90,13 @@ const type=document.getElementById('type').value;
 if(!file){alert('Ընտրեք ֆայլ');return;}
 const reader=new FileReader();reader.onload=()=>{items.push({media:reader.result,desc,type});save();render();};reader.readAsDataURL(file);}
 function deleteItem(index){if(!isAdmin)return;items.splice(index,1);save();render();}
+function exportData(){const dataStr="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(items));
+const dlAnchor=document.createElement('a');dlAnchor.setAttribute('href',dataStr);
+dlAnchor.setAttribute('download','cardlab_items.json');dlAnchor.click();}
+function importData(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){try{items=JSON.parse(e.target.result);save();render();alert('Դեպքեր ներմուծված են');}catch(err){alert('Սխալ JSON')}};reader.readAsText(file);}
 render();
 </script>
 </body>
 </html>
+
+
