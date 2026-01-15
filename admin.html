@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin</title>
+</head>
+<body>
+
+<h2>Admin Panel</h2>
+
+<div id="loginBox">
+  <input type="password" id="password" placeholder="Գաղտնաբառ">
+  <button onclick="login()">Մուտք</button>
+</div>
+
+<div id="adminPanel" style="display:none">
+  <h3>Նոր հայտարարություն</h3>
+
+  <input id="title" placeholder="Վերնագիր"><br><br>
+  <input id="price" placeholder="Գին"><br><br>
+
+  <button onclick="addAd()">Ավելացնել</button>
+
+  <hr>
+
+  <h3>Բոլոր հայտարարությունները</h3>
+  <div id="adsList"></div>
+</div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
+
