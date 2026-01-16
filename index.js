@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!container) return;
 
   const ads = JSON.parse(localStorage.getItem("ads")) || [];
+const firebaseConfig = { ... };
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
   container.innerHTML = "";
 
@@ -20,3 +23,4 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(div);
   });
 });
+
